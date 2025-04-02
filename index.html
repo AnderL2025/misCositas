@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bb</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff7eb3, #ff65a3);
+            overflow: hidden;
+            flex-direction: column;
+            color: white;
+        }
+
+        #intro {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        #intro img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        #intro h1 {
+            font-size: 36px;
+            margin: 20px 0;
+            color: #ff4f81;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        #startButton {
+            font-size: 24px;
+            padding: 15px 30px;
+            background-color: #ff4f81;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #startButton:hover {
+            background-color: #ff65a3;
+            transform: scale(1.05);
+        }
+
+        #mainContent {
+            display: none;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            padding: 50px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+        }
+
+        #message {
+            font-size: 80px;
+            font-weight: bold;
+            color: #ff4f81;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        #heart {
+            font-size: 250px;
+            color: crimson;
+            animation: heartEffect 4s infinite;
+        }
+
+        @keyframes heartEffect {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+            25% {
+                opacity: 0.8;
+                transform: translate(-10px, 10px);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(10px, -10px);
+            }
+            75% {
+                opacity: 0.8;
+                transform: translate(-10px, 10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+        }
+
+        .floating-word {
+            position: absolute;
+            font-size: 24px;
+            color: black;
+            opacity: 0;
+            animation: floatWords 4s infinite;
+        }
+
+        @keyframes floatWords {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+        }
+
+        #signature {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 14px;
+            color: gray;
+        }
+
+        .floating-word {
+            position: absolute;
+            font-size: 20px;
+            color: white;
+            opacity: 0;
+            animation: fadeInOut 3s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="audio" src="miau.mp3" preload="auto"></audio>
+
+    <div id="intro">
+        <img src="Gatitos.gif" alt="Gatitos tiernos">
+        <h1>Mi niña Mel, quiero decirte algo.</h1>
+        <button id="startButton">Click Me!</button>
+    </div>
+
+    <div id="mainContent">
+        <h1 id="message">TE AMO</h1>
+        <div id="heart">❤️</div>
+        <div id="signature">Made with ❤️ by Ander</div>
+    </div>
+
+    <script>
+        const words = [
+            "Hermosa", "Princesa", "Chica única", "Mi niña", "Te quiero", "Te amo", "Turroncito", "Melocotón", "Pequeña", 
+            "Bella", "Lindura", "Mi amor", "Dulzura", "Angelito", "Amorcito", "Cielito", "Bonita", "Encantadora", 
+            "Querida", "Divina", "Ternura", "Dulzón", "Guapa", "Solecito", "Chiquita", "Niña linda", "Cariñosa", 
+            "Estrella", "Luz", "Sol", "Miel", "Reina", "Cielita", "Preciosa", "Sonrisa", "Dulzura", "Radiante", "Mágica", 
+            "Linda", "Feliz", "Rosa", "Dulce", "Beso", "Frescura", "Chula", "Arcoiris", "Ternurita", "Bebé", "Chispa", 
+            "Milagro", "Cielo", "Termita", "Cenicienta", "Caramelo", "Refugio", "Chiquis"
+        ];
+
+        document.getElementById("startButton").addEventListener("click", function() {
+  
+            document.getElementById("intro").style.display = "none";
+            
+            document.getElementById("mainContent").style.display = "block";
+       
+            document.getElementById("audio").play();
+          
+            generateFloatingWords();
+        });
+
+        function generateFloatingWords() {
+            words.forEach((word, index) => {
+                setTimeout(() => {
+                    let wordElement = document.createElement("div");
+                    wordElement.classList.add("floating-word");
+                    wordElement.textContent = word;
+                    document.body.appendChild(wordElement);
+                    positionWord(wordElement);
+                }, index * 500); 
+            });
+        }
+
+        function positionWord(word) {
+            let x = Math.random() * window.innerWidth;
+            let y = Math.random() * window.innerHeight;
+            word.style.left = `${x}px`;
+            word.style.top = `${y}px`;
+            word.style.animationDuration = `${2 + Math.random() * 3}s`;
+        }
+    </script>
+</body>
+</html>
